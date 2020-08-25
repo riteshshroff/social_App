@@ -286,17 +286,32 @@ def search_connections(request):
         name = user.fname + ' ' +  user.lname
         if search:
             flist = Users.objects.filter(Q(fname__icontains=search) | Q(lname__icontains=search) | Q(email__icontains=search) | Q(mobile__icontains=search))                                                
-            for x in flist:                        
-                lis = Friends.objects.filter(Q(friend=x) & Q(user=user))
-                if lis:                    
-                    context = {
-                        'ssn':user,
-                        'name':name,
-                        'search':search,
-                        'flist':flist,
-                        'lis':lis,
-                    }            
-                    return render(request, 'social_home.html', context)            
+            if flist:                
+                for x in flist:                                            
+                    lis = Friends.objects.filter(Q(friend=x) & Q(user=user))
+                    if lis:                    
+                        context = {
+                            'ssn':user,
+                            'name':name,
+                            'search':search,
+                            'flist':flist,
+                            'lis':lis,
+                        }            
+                        return render(request, 'social_home.html', context)
+                    else:
+                        context = {
+                            'ssn':user,
+                            'name':name,
+                            'search':search,                                        
+                        }            
+                        return render(request, 'social_home.html', context)
+            else:
+                context = {
+                    'ssn':user,
+                    'name':name,
+                    'search':search,                                        
+                }            
+                return render(request, 'social_home.html', context)
         else:
             return render(request, 'social_home.html', )        
     else:

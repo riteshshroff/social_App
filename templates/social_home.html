@@ -83,11 +83,11 @@
                                     	<form action="{% url 'save-post' %}" method="post">
                                             {% csrf_token %}
                                             <fieldset class="col-md-4">
-                                                <input id="title" type="text" name="title" placeholder="Title">
+                                                <input id="title" type="text" name="title" placeholder="Title" required>
                                                 <input type="hidden" name="user" value="">
                                             </fieldset>                                            
                                             <fieldset class="col-md-12" style="margin-top: -20px;">
-                                                <textarea style="height: 200px;" name="editor1" id="editor1" placeholder="Write your post."></textarea>
+                                                <textarea style="height: 200px;" name="editor1" id="editor1" placeholder="Write your post." required></textarea>
                                             </fieldset>
                                             <fieldset class="col-md-12" style="margin-top: 10px;">
                                                 <input type="submit" value="Post" class="button">
