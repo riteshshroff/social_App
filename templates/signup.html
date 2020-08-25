@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js"><head>
+    <meta charset="utf-8">    
+    <title>Social | Sign-up Page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">    
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+    <script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/signup.js' %}"></script>
+</head>
+<body>
+    <div class="bg-overlay"></div>
+    <div class="container-fluid">
+        <div class="row">            
+            <div class="col-md-4 col-sm-12">
+                <div class="sidebar-menu">                    
+                    <div class="logo-wrapper" style="margin-bottom:-20px">
+                        <h1 class="logo" style="margin-bottom: -30px;margin-top: -50px;">
+                            <a href="#"><img src="{% static 'images/socialf.png' %}" alt="Circle Template" width="150px" height="125px" style="border: none;"></a>
+                        </h1>                            
+                            <span style="color: blue;font-weight: bold;">Social Sign-up</span>
+                            <style>
+                                #loginbtn:hover{                            
+                                    border: solid 2px #D8AA46;
+                                }
+                            </style>
+                            <form action="{% url 'save-users' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="text" name="fname" value="{{fname}}" id="fname" style='height:25px;font-size: 15px;margin-top:10px' placeholder="Enter First Name" required>
+                                <input type="text" name="lname" value="{{lname}}" id="lname" style='height:25px;font-size: 15px;margin-top: -10px;' placeholder="Enter Last Name" required>
+                                <input type="email" name="email" value="{{email}}" id="email" style='height:25px;font-size: 15px;margin-top: -10px;' placeholder="Enter Email" required>
+                                <p id="emailerror" style="margin-top: -30px;text-align: left;color: red;margin-left: 10px;"></p>
+                                <input type="text" minlength="10" maxlength="10" value="{{mobile}}" name="mobile" id="mobile" style='height:25px;font-size: 15px;margin-top: 10px;' placeholder="10 Digit Mobile Number" required>
+                                <p id="mobileerror" style="margin-top: -30px;text-align: left;color: red;margin-left: 10px;"></p>
+                                <input type="password" name="password" id="password" style='height:25px;font-size: 15px;margin-top: 10px;' placeholder="Password" required>
+                                <input type="submit" id="loginbtn" value="Create" style="height: 35px;text-align: center;font-size: 10px;width:100px;background:limegreen;margin-bottom: -20px;">                                
+                            </form>                                                       
+                            <br>
+                            <label for="">                                
+                                <a href="/" style="text-align: center;font-size: 9px;color:blue;text-decoration:underline;">Go to Login</a>
+                            </label>                                                    
+                    </div>                    
+                    <div class="menu-wrapper">                                        
+                        <a href="#" class="toggle-menu">                            
+                            <i class=""></i>
+                        </a>
+                    </div>                   
+                    <a id="prevslide" class="load-item"><i class="fa fa-angle-left"></i></a>
+                    <a id="nextslide" class="load-item"><i class="fa fa-angle-right"></i></a>
+
+                </div>
+            </div> 
+        </div> 
+    </div> 
+    
+    <div class="container-fluid">   
+        <div class="row">
+            <div class="col-md-12 footer">
+                <p id="footer-text">
+                
+                	Copyright &copy; 2020 <a href="#">Social</a>
+                 	
+                    | Design: Ritesh Mahesh Shroff
+                 
+                 </p>
+            </div><!-- /.footer --> 
+        </div>
+    </div> <!-- /.container-fluid -->
+
+    <script src="{% static 'js/vendor/jquery-1.10.1.min.js' %}"></script>
+    <script>window.jQuery || document.write('<script src="{% static "js/vendor/jquery-1.10.1.min.js" %}"><\/script>')</script>
+    <script src="{% static 'js/jquery.easing-1.3.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+            
+			jQuery(function ($) {
+
+                $.supersized({
+
+                    // Functionality
+                    slide_interval: 3000, // Length between transitions
+                    transition: 1, // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+                    transition_speed: 700, // Speed of transition
+
+                    // Components                           
+                    slide_links: 'blank', // Individual links for each slide (Options: false, 'num', 'name', 'blank')
+                    slides: [ // Slideshow Images
+                        {
+                            image: '{% static "images/back2.jpg" %}'
+                        }, {
+                            image: '{% static "images/back4.jpg" %}'
+                        }, {
+                            image: '{% static "images/back6.jpg" %}'
+                        }, {
+                            image: '{% static "images/back7.jpeg" %}'
+                        }
+                    ]
+                });
+            });
+            
+    </script>
+    
+    	<!-- Google Map -->
+        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>        
+        <!-- Google Map Init-->
+        <script type="text/javascript">
+           function templatemo_map() {
+                $('.google-map').gmap3({
+                    marker:{
+                        address: '16.8496189,96.1288854' 
+                    },
+                        map:{
+                        options:{
+                        zoom: 15,
+                        scrollwheel: false,
+                        streetViewControl : true
+                        }
+                    }
+                });
+            }
+        </script>
+        {% if msg %}
+            <script>        
+                alert('{{msg}}');        
+            </script>
+        {% endif %}
+</body>
+</html>

@@ -1,0 +1,265 @@
+{% if request.session.mobile %}
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js"><head>
+    <meta charset="utf-8">    
+    <title>Social | Social Home Page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">    
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+    <script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/social_home.js' %}"></script>
+    <script src="http://127.0.0.1:8000/static/ckeditor/ckeditor/ckeditor.js"></script>
+</head>
+<body>    
+    <div class="bg-overlay"></div>
+    <div class="container-fluid">
+        <div class="row">            
+            <div class="col-md-4 col-sm-12">
+                <div class="sidebar-menu">                    
+                    <div class="logo-wrapper" style="margin-bottom:-20px;">
+                        <h1 class="logo" style="margin-bottom: -30px;margin-top: -50px;">
+                            <a ><img src="{% static 'images/socialf.png' %}" alt="Circle Template" width="150px" height="125px" style="border: none;"></a>
+                        </h1>                            
+                        <span style="color: blue;font-weight: bold;">Social App</span>                                                                                                                                                                          
+                    </div>                    
+                    <div class="menu-wrapper">
+                        <div style="text-align: center;background:#E5E8ED;">                            
+                            {% if ssn.profile_image %}
+                                <img src="{{ ssn.profile_image.url}}" alt="" width="273px" height="200px">
+                            {% else %}
+                                <img src="{% static 'images/admin.png' %}" alt="" width="273px" height="200px">
+                            {% endif %}
+                            <div style="color: blue;font-weight:bold; margin-top: -20px;">Logged In | {{name}}</div>
+                        </div>
+                        <ul class="menu">
+                            <li><a rel="nofollow"  href="/">Home</a></li>                            
+                            <li><a rel="nofollow" id="" href="/users-profile/">Profile</a></li>
+                            <li><a rel="nofollow" href="/user-connections/">Connections</a></li>                           
+                            <li><a rel="nofollow" href="/mutual-connections/">Mutual Connections</a></li> 
+                            <li><a rel="nofollow" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>                         
+                        <a href="#" class="toggle-menu">
+                            <i class="fa fa-bars"></i>                            
+                        </a>                       
+                    </div>                     
+                    <a id="prevslide" class="load-item"><i class="fa fa-angle-left"></i></a>
+                    <a id="nextslide" class="load-item"><i class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+            
+            <!-- SOCIAL DASHBOARD -->
+            <div class="col-md-8 col-sm-12" id="">
+                <div id="menu-container">
+                    <div id="menu-1" class="about ">
+                        <div class="row">
+                            <ul class="tabs">
+                                <li class="col-md-4 col-sm-4">
+                                    <a href="/" class="icon-item" id="home_btn">
+                                        <i class="fa fa-home"></i>
+                                    </a>
+                                </li>
+                                <li class="col-md-4 col-sm-4">
+                                    <a href="#tab1" class="icon-item" id="post_btn">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </li>
+                                <li class="col-md-4 col-sm-4">
+                                    <a href="#tab2" class="icon-item" id="search_btn_icon">
+                                        <i class="fa fa-search"></i>
+                                    </a>                                    
+                                </li>                                
+                            </ul> 
+                            <div class="col-md-12" id="post_form" style="display: none;">
+                                <div class="contact-form">
+                                    <div class="row">   
+                                    	<form action="{% url 'save-post' %}" method="post">
+                                            {% csrf_token %}
+                                            <fieldset class="col-md-4">
+                                                <input id="title" type="text" name="title" placeholder="Title">
+                                                <input type="hidden" name="user" value="">
+                                            </fieldset>                                            
+                                            <fieldset class="col-md-12" style="margin-top: -20px;">
+                                                <textarea style="height: 200px;" name="editor1" id="editor1" placeholder="Write your post."></textarea>
+                                            </fieldset>
+                                            <fieldset class="col-md-12" style="margin-top: 10px;">
+                                                <input type="submit" value="Post" class="button">
+                                            </fieldset>
+                                        </form>
+                                        <script>                                            
+                                            CKEDITOR.replace( 'editor1', { height: 80 });
+                                        </script>
+                                    </div>
+                                </div> 
+                            </div>                            
+                            <!-- search bar -->
+                            <div class="col-md-12" id="search_form" style="display: none;">
+                                <div class="contact-form">
+                                    <div class="row">   
+                                    	<form action="/search-connections/" method="post">
+                                            {% csrf_token %}
+                                            <fieldset class="col-md-4">
+                                                <input id="search" type="text" name="search" placeholder="Search" value="{{search}}" required>
+                                            </fieldset>                                                                                        
+                                            <fieldset class="col-md-12" style="margin-top: 10px;">
+                                                <input type="submit" value="Search" class="button" id="search_btn">
+                                                <button style="width: 145px;height: 49px;background: transparent;border-radius: 10px;border: 2px solid #D8AA46;font-size: 17px;"><a href="/">RESET</a></button>
+                                            </fieldset>
+                                        </form>                                                                                                                         
+                                    </div>
+                                </div> 
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USER PROFILE -->            
+            <div class="col-md-8 col-sm-12" id="post_list">                
+                <div id="menu-container">
+                    <div id="" class="">                                              
+                        <div class="row">                            
+                            {% for x in post %} 
+                            <div class="col-md-3 col-sm-3">                                
+                                <div class="member-item">                                                                        
+                                    <h6 style="text-align: center;color: #D8AA46;">{{x.user.fname}}</h6>
+                                    <h6 style="text-align: center;margin-top:-25px;color: #D8AA46;">{{x.user.lname}}</h6>
+                                    {% if x.user.profile_image %}
+                                        <img src="{{ x.user.profile_image.url }}" alt="" width="142px" height="140px" style="margin-left:-10px;border-radius:10px;margin-top: -10px;">
+                                    {% else %}
+                                    <img src="{% static 'images/admin.png' %}" alt="" width="142px" height="140px" style="margin-left:-10px;border-radius:10px;margin-top: -10px;">
+                                    {% endif %}
+                                    <span style="display:block;margin-top: 10px;">{{x.updated_at|date:'d-m-Y | G:H '}}</span>
+                                    <span>Social Id | {{x.user.id}}</span>
+                                    <center>
+                                        <button style="display:block;border:none;border-radius:5px;margin-top:20px;border:2px solid #D8AA46;background:white;padding:2px;">
+                                            <a href="/add-friend?ids={{x.user.id}}">Add Friend</a>
+                                        </button>
+                                    </center>                                    
+                                </div>                                
+                            </div> 
+                            <div class="col-md-9 col-sm-9">                                
+                                <div class="member-item">                                                                        
+                                    <label style="text-align: center;color: #D8AA46;">{{x.user.fname}}&nbsp;{{x.user.lname}}</label>
+                                    <h4>{{x.title|safe}}</h4>
+                                    <div class="thumb">                                        
+                                        {{x.posts|safe}}
+                                    </div>
+                                </div>                                
+                            </div>                                          
+                            {% endfor %}                                                
+                        </div>                                   
+                    </div>                  
+                </div> 
+            </div>                  
+
+            <!-- Connection  -->
+            <div class="col-md-8 col-sm-12" id="connections_list">                
+                <div id="menu-container">                                       
+                    <div id="menu-3" class="gallery ">
+                        <div class="row">
+                            {% if flist %}   
+                                {% for x in flist %}     
+                                    <div class="col-md-4 col-ms-6">
+                                        <div class="g-item" style="margin-bottom: -5px;">
+                                            <img src="{{x.profile_image.url}}" alt="" width='227px' height='213px'>
+                                                <a data-rel="lightbox" class="overlay" href="{{x.profile_image.url}}" height='580px' width='560px'>                                                
+                                            </a>
+                                            <center>
+                                                <label>Name | {{x.fname}} {{x.lname}}</label>                                                
+                                            </center>
+                                        </div>
+                                        <span>
+                                            <a href="/view-connection-details?ids={{x.friend.id}}" style="margin-top: 5px;color: #d8aa46;font-weight: bold;display: block;text-align: center;">
+                                                View Detail
+                                            </a>                                            
+                                        </span>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label style="color: #d8aa46;"> No connections found</label>
+                            {% endif %}                                                      
+                        </div> 
+                    </div>
+                </div>
+            </div>   
+        </div> 
+    </div> 
+    
+    <div class="container-fluid">   
+        <div class="row">
+            <div class="col-md-12 footer">
+                <p id="footer-text">                
+                	Copyright &copy; 2020 <a href="#">Social</a>                 	
+                    | Design: Ritesh Mahesh Shroff                 
+                 </p>
+            </div><!-- /.footer --> 
+        </div>
+    </div> <!-- /.container-fluid -->
+
+    <script src="{% static 'js/vendor/jquery-1.10.1.min.js' %}"></script>
+    <script>window.jQuery || document.write('<script src="{% static "js/vendor/jquery-1.10.1.min.js" %}"><\/script>')</script>
+    <script src="{% static 'js/jquery.easing-1.3.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    <script type="text/javascript">            
+        jQuery(function ($) {
+            $.supersized({
+                // Functionality
+                slide_interval: 3000, // Length between transitions
+                transition: 1, // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+                transition_speed: 700, // Speed of transition
+                // Components                           
+                slide_links: 'blank', // Individual links for each slide (Options: false, 'num', 'name', 'blank')
+                slides: [ // Slideshow Images
+                    {
+                        image: '{% static "images/back2.jpg" %}'
+                    }, {
+                        image: '{% static "images/back4.jpg" %}'
+                    }, {
+                        image: '{% static "images/back6.jpg" %}'
+                    }
+                ]
+            });
+        });            
+    </script>
+    
+    	<!-- Google Map -->
+        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>        
+        <!-- Google Map Init-->
+        <script type="text/javascript">
+           function templatemo_map() {
+                $('.google-map').gmap3({
+                    marker:{
+                        address: '16.8496189,96.1288854' 
+                    },
+                        map:{
+                        options:{
+                        zoom: 15,
+                        scrollwheel: false,
+                        streetViewControl : true
+                        }
+                    }
+                });
+            }
+        </script>
+        {% if msg %}
+            <script>        
+                alert('{{msg}}');        
+            </script>
+        {% endif %}
+</body>
+</html>
+{% else %}
+    {% include 'home.html' %}
+{% endif %}

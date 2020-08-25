@@ -1,0 +1,24 @@
+$(document).ready(function(){
+    CKEDITOR.replace( 'editor1' );
+    $('#home_btn').click(function(){
+        $('#post_list').show();
+        $('#search_form').hide();
+        $('#connections_list').hide();
+    });
+    $('#post_btn').click(function(){
+        $('#post_form').toggle();
+        $('#search_form').hide();
+        $('#connections_list').hide();
+    });    
+    $('#search_btn').click(function(){
+        $('#search_form').show();
+        $('#post_form').hide()
+        $('#connections_list').show();
+    });  
+    $('#search_btn_icon').click(function(){
+        $('#post_list').hide()
+        $('#search_form').show();
+        $('#post_form').hide()
+        $('#connections_list').show();
+    });
+});

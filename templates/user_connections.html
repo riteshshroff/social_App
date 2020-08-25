@@ -1,0 +1,144 @@
+{% if request.session.mobile %}
+{% load static %}
+<!DOCTYPE html>
+<html class="no-js"><head>
+    <meta charset="utf-8">    
+    <title>Social | User Connection Page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">    
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/normalize.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo_misc.css' %}">
+    <link rel="stylesheet" href="{% static 'css/templatemo_style.css' %}">
+    <script src="{% static 'js/vendor/modernizr-2.6.2.min.js' %}"></script>	
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{% static 'js/social_home.js' %}"></script>
+    <script src="http://127.0.0.1:8000/static/ckeditor/ckeditor/ckeditor.js"></script>
+</head>
+<body>    
+    <div class="bg-overlay"></div>
+    <div class="container-fluid">
+        <div class="row">            
+            <div class="col-md-4 col-sm-12">
+                <div class="sidebar-menu">                    
+                    <div class="logo-wrapper" style="margin-bottom:-20px;">
+                        <h1 class="logo" style="margin-bottom: -30px;margin-top: -50px;">
+                            <a ><img src="{% static 'images/socialf.png' %}" alt="Circle Template" width="150px" height="125px" style="border: none;"></a>
+                        </h1>                            
+                        <span style="color: blue;font-weight: bold;">Social App</span>                                                                                                                                                                          
+                    </div>                    
+                    <div class="menu-wrapper">
+                        <div style="text-align: center;background:#E5E8ED;">                            
+                            {% if ssn.profile_image %}
+                                <img src="{{ ssn.profile_image.url}}" alt="" width="274px" height="200px">
+                            {% else %}
+                                <img src="{% static 'images/admin.png' %}" alt="" width="274px" height="200px">
+                            {% endif %}
+                            <div style="color: blue;font-weight:bold; margin-top: -20px;">Logged In | {{name}}</div>
+                        </div>
+                        <ul class="menu">
+                            <li><a rel="nofollow" id="home_btn" href="/">Home</a></li>                            
+                            <li><a rel="nofollow" id="" href="/users-profile/">Profile</a></li>
+                            <li><a rel="nofollow" href="/user-connections/">Connections</a></li>       
+                            <li><a rel="nofollow" href="/mutual-connections/">Mutual Connections</a></li>                      
+                            <li><a rel="nofollow" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>                         
+                        <a href="#" class="toggle-menu">
+                            <i class="fa fa-bars"></i>                            
+                        </a>                       
+                    </div>                     
+                    <a id="prevslide" class="load-item"><i class="fa fa-angle-left"></i></a>
+                    <a id="nextslide" class="load-item"><i class="fa fa-angle-right"></i></a>
+                </div>
+            </div>
+                                    
+            <div class="col-md-8 col-sm-12">                
+                <div id="menu-container">                                       
+                    <div id="menu-3" class="gallery ">
+                        <div class="row">
+                            {% if flist %}   
+                                {% for x in flist %}     
+                                    <div class="col-md-4 col-ms-6">
+                                        <div class="g-item" style="margin-bottom: -5px;">
+                                            <img src="{{x.friend.profile_image.url}}" alt="" width='227px' height='213px'>
+                                                <a data-rel="lightbox" class="overlay" href="{{x.friend.profile_image.url}}" height='580px' width='560px'>                                                
+                                            </a>
+                                            <center>
+                                                <label>Name | {{x.friend.fname}} {{x.friend.lname}}</label>                                                
+                                            </center>
+                                        </div>
+                                        <span>
+                                            <a href="/view-connection-details?ids={{x.friend.id}}" style="margin-top: 5px;color: #d8aa46;font-weight: bold;display: block;text-align: center;">
+                                                View Detail
+                                            </a>
+                                        </span>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <label style="color: #d8aa46;"> No connections found</label>
+                            {% endif %}                                                      
+                        </div> 
+                    </div>
+                </div>
+            </div>             
+        </div>
+    </div> 
+    
+    <div class="container-fluid">   
+        <div class="row">
+            <div class="col-md-12 footer">
+                <p id="footer-text">                
+                	Copyright &copy; 2020 <a href="#">Social</a>                 	
+                    | Design: Ritesh Mahesh Shroff                 
+                 </p>
+            </div><!-- /.footer --> 
+        </div>
+    </div> <!-- /.container-fluid -->
+
+    <script src="{% static 'js/vendor/jquery-1.10.1.min.js' %}"></script>
+    <script>window.jQuery || document.write('<script src="{% static "js/vendor/jquery-1.10.1.min.js" %}"><\/script>')</script>
+    <script src="{% static 'js/jquery.easing-1.3.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/plugins.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    
+    <script type="text/javascript">            
+        jQuery(function ($) {
+            $.supersized({
+                // Functionality
+                slide_interval: 3000, // Length between transitions
+                transition: 1, // 0-None, 1-Fade, 2-Slide Top, 3-Slide Right, 4-Slide Bottom, 5-Slide Left, 6-Carousel Right, 7-Carousel Left
+                transition_speed: 700, // Speed of transition
+                // Components                           
+                slide_links: 'blank', // Individual links for each slide (Options: false, 'num', 'name', 'blank')
+                slides: [ // Slideshow Images
+                    {
+                        image: '{% static "images/back2.jpg" %}'
+                    }, {
+                        image: '{% static "images/back4.jpg" %}'
+                    }, {
+                        image: '{% static "images/back6.jpg" %}'
+                    }
+                ]
+            });
+        });            
+    </script>
+    
+    	<!-- Google Map -->
+        <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="{% static 'js/vendor/jquery.gmap3.min.js' %}"></script>        
+        <!-- Google Map Init-->
+        
+        {% if msg %}
+            <script>        
+                alert('{{msg}}');        
+            </script>
+        {% endif %}
+</body>
+</html>
+{% else %}
+    {% include 'home.html' %}
+{% endif %}
